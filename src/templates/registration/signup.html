@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="">
+    <h2 class="">
+        Join Us!
+    </h2>
+    <form class="" method="POST" novalidate enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        <div class="">
+            {{ form.name.errors }}
+            {{ form.name }}
+        </div>
+        <div class="">
+            {{ form.username.errors }}
+            {{ form.username }}
+        </div>
+        <div class="">
+            {{ form.email.errors }}
+            {{ form.email }}
+        </div>
+        <div class="">
+            {{ form.photo.errors }}
+            {{ form.photo }}
+        </div>
+        <div class="">
+            {{ form.password1.errors }}
+            {{ form.password1 }}
+        </div>
+        <div class="">
+            {{ form.password2.errors }}
+            {{ form.password2 }}
+        </div>
+        <button type="submit" class="">
+            Sign up
+        </button>
+    </form>
+
+    <div class="">
+        Already a member? <a class="" href="{% url "login" %}">Sign In</a>
+    </div>
+</div>
+{% endblock content %}
+

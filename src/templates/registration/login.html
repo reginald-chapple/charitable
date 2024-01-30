@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="">
+        <h2 class="">
+            Log-in to your account
+        </h2>
+        <form class="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
+        
+            <div class="">
+                <input id="id_username" name="username" type="email" placeholder="Email">
+            </div>
+            <div class="">
+                <input id="id_password" name="password" type="password" placeholder="Password">
+            </div>
+            <button type="submit" class="">
+                Login
+            </button>
+        </form>
+
+        <div class="">
+            New to us? <a class="" href="{% url "registration:signup" %}">Sign Up</a>
+        </div>
+    </div>
+{% endblock %}

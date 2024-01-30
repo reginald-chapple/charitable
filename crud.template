@@ -1,0 +1,128 @@
+def create_view(request):
+    # dictionary for initial data with
+    # field names as keys
+    context ={}
+ 
+    # add the dictionary during initialization
+    form = GeeksForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+         
+    context['form']= form
+    return render(request, "create_view.html", context)
+
+def list_view(request):
+    # dictionary for initial data with
+    # field names as keys
+    context ={}
+ 
+    # add the dictionary during initialization
+    context["dataset"] = GeeksModel.objects.all()
+         
+    return render(request, "list_view.html", context)
+
+def detail_view(request, id):
+    # dictionary for initial data with
+    # field names as keys
+    context ={}
+ 
+    # add the dictionary during initialization
+    context["data"] = GeeksModel.objects.get(id = id)
+         
+    return render(request, "detail_view.html", context)
+
+# update view for details
+def update_view(request, id):
+    # dictionary for initial data with
+    # field names as keys
+    context ={}
+ 
+    # fetch the object related to passed id
+    obj = get_object_or_404(GeeksModel, id = id)
+ 
+    # pass the object as instance in form
+    form = GeeksForm(request.POST or None, instance = obj)
+ 
+    # save the data from the form and
+    # redirect to detail_view
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect("/"+id)
+ 
+    # add form dictionary to context
+    context["form"] = form
+ 
+    return render(request, "update_view.html", context)
+
+# delete view for details
+def delete_view(request, id):
+    # dictionary for initial data with
+    # field names as keys
+    context ={}
+ 
+    # fetch the object related to passed id
+    obj = get_object_or_404(GeeksModel, id = id)
+ 
+ 
+    if request.method =="POST":
+        # delete object
+        obj.delete()
+        # after deleting redirect to
+        # home page
+        return HttpResponseRedirect("/")
+ 
+    return render(request, "delete_view.html", context)
+
+{{ form.name.errors }}
+<label for="{{ form.name.id_for_label }}">Name:</label>
+{{ form.name }}
+
+<form id="my-form">
+    <input type="hidden" name="shift_id" />
+    <input type="hidden" name="site_code" />
+</form>
+
+const date = Date.now();
+const time = date.toTimeString();
+const inputs = document.getElementById("my-form").elements;
+const shift_id = inputs["shift_id"];
+const site_code = inputs["site_code"];
+
+$.ajax({
+    type:"POST",
+    url: "/arrive",
+    data:{
+        shift_id: shift_id,
+        site_code: site_code,
+        arrival_time: time
+    },
+    success: function( data ) 
+    {
+        // add code
+        $( '#message' ).text(data);
+    }
+});
+
+{
+    site_code: { in, out, notes },
+    site_code: { in, out, notes },
+}
+
+stop[site_code]['in']
+
+for site_code, site_info in sites.items():
+    print("\nSite Code:", site_code)
+    
+    for key in site_info:
+        print(key + ':', site_info[key])
+
+def set_arrival_time(request):
+    if request.method == 'GET':
+           shift_id = request.GET['shift_id']
+           shift = Shift.objects.get(pk=shift_id) # getting the shift
+           trip_log = shift.trip_log # getting shift trip log
+
+           m.save()  # saving it to store in database
+           return HttpResponse("Success!") # Sending an success response
+    else:
+           return HttpResponse("Request method is not a GET")
